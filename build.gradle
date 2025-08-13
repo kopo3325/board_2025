@@ -1,8 +1,8 @@
 plugins {
 	id 'java'
 	id 'war'
-	id 'org.springframework.boot' version '3.5.4'
-	id 'io.spring.dependency-management' version '1.1.7'
+	id 'org.springframework.boot' version '3.3.3'
+	id 'io.spring.dependency-management' version '1.1.5'
 }
 
 group = 'kopo33'
@@ -19,29 +19,40 @@ repositories {
 }
 
 dependencies {
-	compileOnly 'org.projectlombok:lombok:1.18.32'
-	annotationProcessor 'org.projectlombok:lombok:1.18.32'
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	runtimeOnly 'com.mysql:mysql-connector-j:8.3.0'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	developmentOnly 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
-	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
-	implementation 'javax.servlet:jstl:1.2'
+	// Spring Boot Starters
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
-	// Security
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.security:spring-security-taglibs'
-	testImplementation 'org.springframework.security:spring-security-test'
 
-	//jwt
+	// [가장 결정적인 수정] providedRuntime -> implementation 으로 변경
+	// 내장 톰캣으로 실행(bootRun)하기 위해 톰캣 라이브러리를 항상 포함하도록 설정
+	implementation 'org.springframework.boot:spring-boot-starter-tomcat'
+
+	// MyBatis (MyBatis 사용 시 필수)
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+
+	// JSP & JSTL (Spring Boot 3.x 표준 - jakarta)
+	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+	implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0'
+	implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1'
+
+	// Security Taglibs for JSP
+	implementation 'org.springframework.security:spring-security-taglibs'
+
+	// JWT (JSON Web Token) 라이브러리
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+	// Database & Lombok & DevTools 등
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	// Test
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
 }
 
 tasks.named('test') {

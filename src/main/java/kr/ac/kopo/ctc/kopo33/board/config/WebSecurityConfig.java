@@ -1,6 +1,6 @@
 package kr.ac.kopo.ctc.kopo33.board.config;
 
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,13 +39,14 @@ public class WebSecurityConfig {
                         .requestMatchers("/", "/WEB-INF/views/index.jsp", "/public/**").permitAll()
                         .requestMatchers("/login", "doLogin", "/WEB-INF/views/login.jsp").permitAll()
                         .requestMatchers("/auth/register", "/auth/authenticate").permitAll()
+                        .requestMatchers("/articles/**").authenticated()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/doLogin")
-                        .defaultSuccessUrl("/home", true)
+                        .defaultSuccessUrl("/articles", true)
                         .failureUrl("/login?error=true")
                         .permitAll()
                 )
