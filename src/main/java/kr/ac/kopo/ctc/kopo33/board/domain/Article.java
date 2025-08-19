@@ -21,7 +21,11 @@ public class Article {
     @Column(length = 10000)
     private String content;
 
-    private String author;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    
 
     private LocalDateTime createdAt;
 

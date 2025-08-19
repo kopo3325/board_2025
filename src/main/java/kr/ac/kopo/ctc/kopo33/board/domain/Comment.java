@@ -15,7 +15,41 @@ public class Comment {
     @JoinColumn(name = "user_id")
     private User user;
 
+    
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "post_id")
-    private Post post;
+    @JoinColumn(name = "article_id")
+    private Article article;
+
+    public Long getComment_id() {
+        return comment_id;
+    }
+
+    public void setComment_id(Long comment_id) {
+        this.comment_id = comment_id;
+    }
+
+    public String getComment_body() {
+        return comment_body;
+    }
+
+    public void setComment_body(String comment_body) {
+        this.comment_body = comment_body;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Article getArticle() {
+        return article;
+    }
+
+    public void setArticle(Article article) {
+        this.article = article;
+    }
+
 }

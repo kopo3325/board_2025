@@ -27,17 +27,23 @@
         </tr>
     </thead>
     <tbody>
+        <c:if test="${empty articlePage.content}">
+            <tr>
+                <td colspan="4" style="text-align: center;">게시글이 없습니다.</td>
+            </tr>
+        </c:if>
         <c:forEach var="article" items="${articlePage.content}">
             <tr>
                 <td>${article.id}</td>
                 <td><a href="/articles/${article.id}">${article.title}</a></td>
-                <td>${article.author}</td>
+                <td>${article.user.name}</td>
                 <td>${article.formattedCreatedAt}</td>
             </tr>
         </c:forEach>
     </tbody>
 </table>
 
+<c:if test="${articlePage.totalPages > 0}">
 <div style="text-align: center;">
     <c:url var="baseUrl" value="/articles"/>
     <c:set var="searchParams" value=""/>
@@ -75,6 +81,7 @@
         <a href="${baseUrl}?page=${articlePage.totalPages - 1}${searchParams}">맨끝으로</a>
     </c:if>
 </div>
+</c:if>
 
 </body>
 </html>
